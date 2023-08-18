@@ -1,5 +1,7 @@
 <h2>Image Resizing Script README</h2>
 
+>Status do Projeto: Em desenvolvimento
+
 <p>This script allows you to resize all images in a specified folder to a maximum width of 1000 pixels, while
     maintaining the aspect ratio. If an image is larger than 1MB, it will be resized and saved with the prefix
     "redimensionada_" in the same folder. The original image will be deleted to save space.</p>
