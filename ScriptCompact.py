@@ -60,3 +60,5 @@ for filename in os.scandir(pasta):
         print(f'{filename.path} já está abaixo do limite de tamanho.')
     elif filename.is_file() and not filename.name.lower().endswith(('.jpg', '.jpeg', '.png')):
         print(f'{filename.path} não é um arquivo de imagem válido.')
+
+        
