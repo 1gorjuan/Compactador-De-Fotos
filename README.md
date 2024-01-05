@@ -1,41 +1,41 @@
-<h2>Image Resizing Script README</h2>
+<h2>README do Script de Redimensionamento de Imagens</h2>
 
 >Status do Projeto: Em desenvolvimento
 
-<p>This script allows you to resize all images in a specified folder to a maximum width of 1000 pixels, while
-    maintaining the aspect ratio. If an image is larger than 1MB, it will be resized and saved with the prefix
-    "redimensionada_" in the same folder. The original image will be deleted to save space.</p>
+<p>Este script permite redimensionar todas as imagens em uma pasta especificada para uma largura máxima de 1000 pixels,
+    mantendo a proporção. Se uma imagem for maior que 1 MB, ela será redimensionada e salva com o prefixo
+    "redimensionada_" na mesma pasta. A imagem original será excluída para economizar espaço.</p>
 
-<h3>Prerequisites</h3>
+<h3>Pré-requisitos</h3>
 
 <ul>
-    <li>Python 3.5 or later</li>
-    <li>PIL (Python Imaging Library) module</li>
+    <li>Python 3.5 ou posterior</li>
+    <li>Módulo PIL (Python Imaging Library)</li>
 </ul>
 
-<h3>Installation</h3>
+<h3>Instalação</h3>
 
 <ol>
-    <li>Install Python 3.5 or later from the official website: https://www.python.org/downloads/</li>
-    <li>Install the PIL module by running the command pip install pillow in the terminal.</li>
+    <li>Instale o Python 3.5 ou posterior no site oficial: https://www.python.org/downloads/</li>
+    <li>Instale o módulo PIL executando o comando pip install pillow no terminal.</li>
 </ol>
 
-<h3>Usage<h3>
-        <ol>
-            <li>Save the script in a desired location.</li>
-            <li>Open a terminal window and navigate to the folder containing the script.</li>
-            <li>Run the script by entering the command python image_resizing_script.py in the terminal.</li>
-            <li>Enter the path to the folder containing the images you want to resize when prompted.</li>
-            <li>The script will resize all eligible images in the folder and save them with the prefix "redimensionada_"
-                in the same folder.</li>
-            <li>The original images will be deleted.</li>
-        </ol>
+<h3>Uso</h3>
+<ol>
+    <li>Salve o script em uma localização desejada.</li>
+    <li>Abra uma janela de terminal e navegue até a pasta contendo o script.</li>
+    <li>Execute o script digitando o comando python image_resizing_script.py no terminal.</li>
+    <li>Informe o caminho para a pasta contendo as imagens que você deseja redimensionar quando solicitado.</li>
+    <li>O script redimensionará todas as imagens elegíveis na pasta e as salvará com o prefixo "redimensionada_"
+        na mesma pasta.</li>
+    <li>As imagens originais serão excluídas.</li>
+</ol>
 
-<h3>Notes</h3>
+<h3>Observações</h3>
 
 <ul>
-    <li>The script only resizes images with the extensions ".jpg", ".jpeg", or ".png".</li>
-    <li>If an image is already smaller than or equal to 1MB, it will not be resized.</li>
-    <li>If a file with the same name as the resized image already exists, it will be overwritten.</li>
-    <li>If the PIL module is not installed, the script will exit and prompt you to install it.</li>
+    <li>O script apenas redimensiona imagens com as extensões ".jpg", ".jpeg" ou ".png".</li>
+    <li>Se uma imagem já for menor ou igual a 1 MB, ela não será redimensionada.</li>
+    <li>Se um arquivo com o mesmo nome da imagem redimensionada já existir, ele será sobrescrito.</li>
+    <li>Se o módulo PIL não estiver instalado, o script será encerrado e solicitará a instalação.</li>
 </ul>
