@@ -1,64 +1,66 @@
 import sys
 import os
+from PIL import Image
+from fpdf import FPDF
 
-# Check if PIL is installed
-try:
-    from PIL import Image
-except ImportError:
-    print('PIL module is not installed. Please install it and try again.')
-    sys.exit()
+def resize_image(filename, folder):
+    # Code to resize the image
+    pass
 
-def redimensionar_imagem(filename, pasta):
-    # Check if file extension is valid
-    if not filename.lower().endswith(('.jpg', '.jpeg', '.png')):
-        return None
-    
-    with Image.open(filename) as img:
-        # Define uma largura máxima de 1000 pixels
-        largura_maxima = 1000
-        # Redimensiona a imagem mantendo a proporção
-        img.thumbnail((largura_maxima, largura_maxima), Image.ANTIALIAS)
-        # Define o novo nome do arquivo
-        novo_nome_arquivo = os.path.join(pasta, f"redimensionada_{os.path.basename(filename)}")
-        try:
-            img.save(novo_nome_arquivo, optimize=True, quality=80)
-        except IOError:
-            return None
-        
-        # Check if new file size is smaller than 1MB
-        if os.path.getsize(novo_nome_arquivo) < 1000000:
-            return novo_nome_arquivo
-        else:
-            os.remove(novo_nome_arquivo)
-            return None
+def create_pdf(folder):
+    pdf = FPDF()
+    # Iterate through all images in the folder
+    for filename in os.scandir(folder):
+        if filename.is_file() and filename.name.lower().endswith(('.jpg', '.jpeg', '.png')):
+            # Open image to get dimensions
+            with Image.open(filename.path) as img:
+                # Calculate aspect ratio to maintain proportions
+                width, height = img.size
+                aspect_ratio = width / height
+                # A4 size: 210x297 mm
+                # Adjust dimensions to fit A4 page while maintaining aspect ratio
+                if width > height:
+                    new_width = 210
+                    new_height = 210 / aspect_ratio
+                else:
+                    new_height = 297
+                    new_width = 297 * aspect_ratio
+                pdf.add_page()
+                # Add image to PDF with calculated dimensions
+                pdf.image(filename.path, x=0, y=0, w=new_width, h=new_height)
+    pdf_output = os.path.join(folder, "output.pdf")
+    pdf.output(pdf_output, "F")
+    return pdf_output
 
-# Get folder containing the images to be resized from user input
-pasta = input('Por favor, insira o caminho para a pasta contendo as imagens a serem redimensionadas: ')
-if not os.path.exists(pasta):
-    print('A pasta especificada não existe. Por favor, insira um caminho válido e tente novamente.')
-    sys.exit()
+def main():
+    print("Escolha uma opção:")
+    print("1 - Compactar Fotos")
+    print("2 - Criar PDF")
 
-# Percorre todas as imagens na pasta e as redimensiona, se necessário
-for filename in os.scandir(pasta):
-    if filename.is_file() and filename.stat().st_size > 1000000 and filename.name.lower().endswith(('.jpg', '.jpeg', '.png')):
-        caminho_imagem = filename.path
-        novo_nome_arquivo = redimensionar_imagem(caminho_imagem, pasta)
-        # Verifica se a imagem foi redimensionada com sucesso
-        if novo_nome_arquivo is not None:
-            # Renomeia o arquivo redimensionado para incluir o prefixo "redimensionada_"
-            novo_caminho_imagem = os.path.join(pasta, f"redimensionada_{os.path.basename(filename)}")
-            # Check if file with same name already exists
-            if os.path.exists(novo_caminho_imagem):
-                print(f'Warning: {novo_caminho_imagem} already exists and will be overwritten.')
-            os.rename(novo_nome_arquivo, novo_caminho_imagem)
-            print(f'{caminho_imagem} foi redimensionada e salva como {novo_caminho_imagem}.')
-            # Exclui o arquivo original para economizar espaço
-            os.remove(caminho_imagem)
-        else:
-            print(f'Error: {caminho_imagem} não pôde ser redimensionada ou já está abaixo do limite de tamanho.')
-    elif filename.is_file() and filename.stat().st_size <= 1000000:
-        print(f'{filename.path} já está abaixo do limite de tamanho.')
-    elif filename.is_file() and not filename.name.lower().endswith(('.jpg', '.jpeg', '.png')):
-        print(f'{filename.path} não é um arquivo de imagem válido.')
+    option = input("Escolha o número da Opção: ")
 
+    folder = input('Por favor, cole o caminho da pasta contendo as imagens: ') 
+    if not os.path.exists(folder):
+        print('A pasta não existe. Por favor cole um caminho válido.') 
+        sys.exit()
 
+    if option == "1":
+        for filename in os.scandir(folder):
+            if filename.is_file() and filename.stat().st_size > 1000000 and filename.name.lower().endswith(('.jpg', '.jpeg', '.png')):
+                image_path = filename.path
+                new_filename = resize_image(image_path, folder)
+                # Code to resize the images
+            elif filename.is_file() and filename.stat().st_size <= 1000000:
+                print(f'{filename.path} is already below the size limit.')
+            elif filename.is_file() and not filename.name.lower().endswith(('.jpg', '.jpeg', '.png')):
+                print(f'{filename.path} is not a valid image file.')
+
+    elif option == "2":
+        pdf_output = create_pdf(folder)
+        print(f"PDF created successfully: {pdf_output}")
+
+    else:
+        print("Invalid option.")
+
+if __name__ == "__main__":
+    main()
